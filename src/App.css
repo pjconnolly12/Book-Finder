@@ -1,5 +1,5 @@
 * {
-  background-color: #cfd0d1;
+  background-color: #8399a9;
 }
 #wrapper {
   text-align: center;
@@ -17,4 +17,44 @@
   height: 30px;
   padding: 0px 15px;
   background-color: #5e97f2;
+}
+.books-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 30px; 
+}
+.bookCard {
+  width: 35%;
+  background-color: #707171;
+  margin: 10px 30px;
+  padding: 5px;
+  border-radius: 5%;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-template-areas: 
+    "image title"
+    "image author"
+    "image info"
+}
+.image {
+  grid-area: image;
+  background-color: #707171;
+}
+.title {
+  grid-area: title;
+  background-color: #707171;
+}
+.author {
+  grid-area: author;
+  background-color: #707171;
+}
+.info {
+  justify-self: center;
+  align-self: center;
+  grid-area: info;
+  text-decoration: none;
+  width: 125px;
+  background-color: #8399a9;
+  color: #254054;
 }

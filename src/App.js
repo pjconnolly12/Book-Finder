@@ -25,6 +25,7 @@ class BookSearch extends React.Component {
     if (this.state.input === ''){
       this.setState({error: true})
     } else {
+      this.setState({search: true})
       const search = this.state.input.split(" ").join('+');
       fetch(`${URL_PATH}?q=${search}`)
         .then(response => response.json())
@@ -88,10 +89,12 @@ function SearchError(props){
 function Books(props){
   const bookItems = props.items;
   const bookCards = bookItems.map((entry) =>
-    <img src={entry.imageLink.smallThumbnail} alt="No Image"/>
-    <h3>{entry.title}</h3>
-    <p>{entry.authors}</p>
-    <a href={entry.infolink}>More Info</a>
+      <div key={entry.accessInfo.id} className="bookCard">
+        <img className="image" src={entry.volumeInfo.imageLinks.smallThumbnail} alt="No Image Available"/>
+        <h3 className="title">{entry.volumeInfo.title}</h3>
+        <p className="author">Author(s):{entry.volumeInfo.authors}</p>
+        <a className="info" href={entry.volumeInfo.infoLink}><strong>More Info</strong></a>
+      </div>
   );
   return (
     <div className="books-wrapper">
