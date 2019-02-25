@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
+
 * {
   background-color: #8399a9;
 }
 #wrapper {
   text-align: center;
+}
+h1 {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 2.5em;
 }
 #search-wrapper {
   display: flex;
@@ -25,36 +31,41 @@
   padding-top: 30px; 
 }
 .bookCard {
-  width: 35%;
+  width: 300px;
   background-color: #707171;
   margin: 10px 30px;
-  padding: 5px;
+  padding: 5px 0px 10px 5px;
   border-radius: 5%;
-  display: grid;
-  grid-template-columns: 30% 70%;
-  grid-template-areas: 
-    "image title"
-    "image author"
-    "image info"
+  box-shadow: 7px 7px 3px black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .image {
-  grid-area: image;
   background-color: #707171;
+  align-self: center;
+  width: 128px;
+  height: 180px;
 }
 .title {
-  grid-area: title;
   background-color: #707171;
+  align-self: center;
 }
 .author {
-  grid-area: author;
   background-color: #707171;
+  align-self: center;
 }
 .info {
-  justify-self: center;
   align-self: center;
-  grid-area: info;
   text-decoration: none;
   width: 125px;
+  padding: 5px;
   background-color: #8399a9;
   color: #254054;
+  margin-top: 15px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.error-wrapper {
+  padding-top: 20px;
+  color: #a90404;
 }

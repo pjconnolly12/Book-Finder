@@ -24,10 +24,11 @@ class BookSearch extends React.Component {
   onSearch() {
     if (this.state.input === ''){
       this.setState({error: true})
+      this.setState({search: false})
     } else {
       this.setState({search: true})
       const search = this.state.input.split(" ").join('+');
-      fetch(`${URL_PATH}?q=${search}`)
+      fetch(`${URL_PATH}?q=${search}&maxResults=20`)
         .then(response => response.json())
         .then(json => {
           let { items } = json;
@@ -73,7 +74,7 @@ function Search(props){
 function NoResults(props){
   return (
     <div className="noResults-wrapper">
-      <h2>No results, try another search</h2>
+      <h2>Please enter title or author to find books</h2>
     </div>
   );
 }
@@ -90,10 +91,11 @@ function Books(props){
   const bookItems = props.items;
   const bookCards = bookItems.map((entry) =>
       <div key={entry.accessInfo.id} className="bookCard">
-        <img className="image" src={entry.volumeInfo.imageLinks.smallThumbnail} alt="No Image Available"/>
+        <img className="image" src={entry.volumeInfo.imageLinks ? entry.volumeInfo.imageLinks.smallThumbnail : '#'} 
+          alt="No Image Available"/>
         <h3 className="title">{entry.volumeInfo.title}</h3>
-        <p className="author">Author(s):{entry.volumeInfo.authors}</p>
-        <a className="info" href={entry.volumeInfo.infoLink}><strong>More Info</strong></a>
+        <p className="author">By: {entry.volumeInfo.authors.join(', ')}</p>
+        <a className="info" href={entry.volumeInfo.infoLink} target="_blank" rel="noopener noreferrer"><strong>More Info</strong></a>
       </div>
   );
   return (
