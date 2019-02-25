@@ -1,28 +1,105 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-class App extends Component {
-  render() {
+const URL_PATH = 'https://www.googleapis.com/books/v1/volumes';
+
+class BookSearch extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      input: '',
+      search: false,
+      error: false,
+      items: [],
+    };
+    this.addText = this.addText.bind(this);
+    this.onSearch = this.onSearch.bind(this);
+  }
+
+  addText(e) {
+    this.setState({input: e.target.value})
+    this.setState({error: false})
+  };
+
+  onSearch() {
+    if (this.state.input === ''){
+      this.setState({error: true})
+    } else {
+      const search = this.state.input.split(" ").join('+');
+      fetch(`${URL_PATH}?q=${search}`)
+        .then(response => response.json())
+        .then(json => {
+          let { items } = json;
+          this.setState({ items });
+          console.log(items);
+        })
+    }
+  };
+
+  render () {
+    const isThereInput = this.state.error;
+    const validSearch = this.state.search;
+    let info;
+    if (isThereInput) {
+      info = <SearchError onSearch={this.onSearch} />; 
+    } else if (validSearch) {
+      info = <Books onSearch={this.onSearch} items={this.state.items} />;
+    } else {
+      info = <NoResults />;
+    }
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div id="wrapper">
+        <h1>BOOK FINDER</h1>
+        <Search 
+          input={this.state.input} 
+          onSearch={this.onSearch} 
+          addText={this.addText}/>
+        {info}
       </div>
     );
   }
 }
 
-export default App;
+function Search(props){
+  return (
+    <div id="search-wrapper">
+      <input type="text" id="search" placeholder="Search by book title or author" onChange={props.addText}/>
+      <button id="search-button" type="submit" onClick={props.onSearch}>SEARCH</button>
+    </div>
+  )
+}
+
+function NoResults(props){
+  return (
+    <div className="noResults-wrapper">
+      <h2>No results, try another search</h2>
+    </div>
+  );
+}
+
+function SearchError(props){
+  return (
+    <div className="error-wrapper">
+        <h2>Please enter a book or an author and try again, thanks!</h2>
+    </div>
+  );
+}
+
+function Books(props){
+  const bookItems = props.items;
+  const bookCards = bookItems.map((entry) =>
+    <img src={entry.imageLink.smallThumbnail} alt="No Image"/>
+    <h3>{entry.title}</h3>
+    <p>{entry.authors}</p>
+    <a href={entry.infolink}>More Info</a>
+  );
+  return (
+    <div className="books-wrapper">
+    {bookCards}
+    </div>
+  );
+}
+
+// const common = ['the', 'and', 'is', 'in', 'or', 'that', 'a', 'on'];
+
+export default BookSearch;
