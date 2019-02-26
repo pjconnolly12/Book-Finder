@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
+@import url("https://fonts.googleapis.com/css?family=Raleway");
 
 * {
+  font-family: 'Raleway', sans-serif;
   background-color: #8399a9;
 }
 #wrapper {
@@ -8,7 +10,7 @@
 }
 h1 {
   font-family: 'Luckiest Guy', cursive;
-  font-size: 2.5em;
+  font-size: 3em;
 }
 #search-wrapper {
   display: flex;
@@ -32,28 +34,38 @@ h1 {
 }
 .bookCard {
   width: 300px;
-  background-color: #707171;
+  background-color: white;
   margin: 10px 30px;
-  padding: 5px 0px 10px 5px;
+  padding: 5px 0px 15px 5px;
   border-radius: 5%;
-  box-shadow: 7px 7px 3px black;
+  box-shadow: 7px 7px 3px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 .image {
-  background-color: #707171;
+  background-color: white;
   align-self: center;
   width: 128px;
   height: 180px;
 }
 .title {
-  background-color: #707171;
-  align-self: center;
+  background-color: white;
+  align-self: flex-start;
+  margin: 2px;
+  text-align: left;
 }
 .author {
-  background-color: #707171;
-  align-self: center;
+  background-color: white;
+  align-self: flex-start;
+  text-align: left;
+  margin: 2px;
+}
+.publisher {
+  margin: 2px;
+  background-color: white;
+  align-self: flex-start;
+  padding-bottom: 5px;
+  text-align: left;
 }
 .info {
   align-self: center;
@@ -61,8 +73,8 @@ h1 {
   width: 125px;
   padding: 5px;
   background-color: #8399a9;
-  color: #254054;
-  margin-top: 15px;
+  color: black;
+  margin-top: auto;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 .error-wrapper {

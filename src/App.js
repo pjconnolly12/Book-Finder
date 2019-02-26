@@ -28,7 +28,7 @@ class BookSearch extends React.Component {
     } else {
       this.setState({search: true})
       const search = this.state.input.split(" ").join('+');
-      fetch(`${URL_PATH}?q=${search}&maxResults=20`)
+      fetch(`${URL_PATH}?q=${search}&maxResults=21`)
         .then(response => response.json())
         .then(json => {
           let { items } = json;
@@ -95,6 +95,7 @@ function Books(props){
           alt="No Image Available"/>
         <h3 className="title">{entry.volumeInfo.title}</h3>
         <p className="author">By: {entry.volumeInfo.authors.join(', ')}</p>
+        <p className="publisher">Published By: {entry.volumeInfo.publisher}</p>
         <a className="info" href={entry.volumeInfo.infoLink} target="_blank" rel="noopener noreferrer"><strong>More Info</strong></a>
       </div>
   );
