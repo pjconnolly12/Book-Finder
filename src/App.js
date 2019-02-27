@@ -28,7 +28,7 @@ class BookSearch extends React.Component {
     } else {
       this.setState({search: true})
       const search = this.state.input.split(" ").join('+');
-      fetch(`${URL_PATH}?q=${search}&maxResults=21`)
+      fetch(`${URL_PATH}?q=${search}&maxResults=10`)
         .then(response => response.json())
         .then(json => {
           let { items } = json;
@@ -89,16 +89,21 @@ function SearchError(props){
 
 function Books(props){
   const bookItems = props.items;
-  const bookCards = bookItems.map((entry) =>
-      <div key={entry.accessInfo.id} className="bookCard">
-        <img className="image" src={entry.volumeInfo.imageLinks ? entry.volumeInfo.imageLinks.smallThumbnail : '#'} 
-          alt="No Image Available"/>
+  const bookCards = bookItems.map((entry) => {
+    let image = entry.volumeInfo.imageLinks === undefined ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/480px-No_image_available.svg.png' : entry.volumeInfo.imageLinks.smallThumbnail;
+    let keyid = entry.id === undefined ? 'No ID' : entry.id;
+    let published = entry.volumeInfo.publisher === undefined ? 'No Publisher Provided' : entry.volumeInfo.publisher;
+    let info = entry.volumeInfo.infoLink === undefined ? '#' : entry.volumeInfo.infoLink;
+    let author = entry.volumeInfo.authors === undefined ? 'No Author Provided' : entry.volumeInfo.authors.join(', ');
+    console.log(image, keyid, published, info);
+      return <div key={keyid} className="bookCard">
+        <img className="image" src={image}/>
         <h3 className="title">{entry.volumeInfo.title}</h3>
-        <p className="author">By: {entry.volumeInfo.authors.join(', ')}</p>
-        <p className="publisher">Published By: {entry.volumeInfo.publisher}</p>
-        <a className="info" href={entry.volumeInfo.infoLink} target="_blank" rel="noopener noreferrer"><strong>More Info</strong></a>
-      </div>
-  );
+        <p className="author">By: {author}</p>
+        <p className="publisher">Published By: {published}</p>
+        <a className="info" href={entry.volumeInfo.infoLink} target="_blank"><strong>More Info</strong></a>
+      </div>;
+  });
   return (
     <div className="books-wrapper">
     {bookCards}
