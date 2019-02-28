@@ -1,5 +1,8 @@
 import React from 'react';
 import './App.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import ScrollEvent from 'react-onscroll';
 
 const URL_PATH = 'https://www.googleapis.com/books/v1/volumes';
 
@@ -11,10 +14,12 @@ class BookSearch extends React.Component {
       search: false,
       error: false,
       items: [],
+      button: false,
     };
     this.addText = this.addText.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.searchOnEnter = this.searchOnEnter.bind(this);
+    this.handleScrollCallback = this.handleScrollCallback.bind(this);
   }
 
   addText(e) {
@@ -58,6 +63,14 @@ class BookSearch extends React.Component {
     }}
   };
 
+  handleScrollCallback(e) {
+    if(document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+      this.setState({button: true});
+    } else {
+      this.setState({button: false});
+    }
+  }
+
   render () {
     const isThereInput = this.state.error;
     const validSearch = this.state.search;
@@ -71,6 +84,7 @@ class BookSearch extends React.Component {
     }
     return (
       <div id="wrapper">
+        <ScrollEvent handleScrollCallback={this.handleScrollCallback} />
         <h1>BOOK FINDER</h1>
         <Search 
           input={this.state.input}
@@ -78,6 +92,7 @@ class BookSearch extends React.Component {
           onSearch={this.onSearch} 
           addText={this.addText}/>
         {info}
+        <BackToTop button={this.state.button} />
       </div>
     );
   }
@@ -130,6 +145,20 @@ function Books(props){
     {bookCards}
     </div>
   );
+}
+
+function BackToTop(props){
+  let buttonId;
+  if (props.button){
+    buttonId = 'button';
+  } else {
+    buttonId = 'button-hide';
+  };
+  return (
+  <a href="#wrapper" id={buttonId}>
+    <FontAwesomeIcon icon={faArrowUp}/> Top
+  </a>
+  )
 }
 
 // const common = ['the', 'and', 'is', 'in', 'or', 'that', 'a', 'on'];
