@@ -14,6 +14,7 @@ class BookSearch extends React.Component {
     };
     this.addText = this.addText.bind(this);
     this.onSearch = this.onSearch.bind(this);
+    this.searchOnEnter = this.searchOnEnter.bind(this);
   }
 
   addText(e) {
@@ -28,7 +29,7 @@ class BookSearch extends React.Component {
     } else {
       this.setState({search: true})
       const search = this.state.input.split(" ").join('+');
-      fetch(`${URL_PATH}?q=${search}&maxResults=10`)
+      fetch(`${URL_PATH}?q=${search}&maxResults=21`)
         .then(response => response.json())
         .then(json => {
           let { items } = json;
@@ -38,6 +39,25 @@ class BookSearch extends React.Component {
     }
   };
 
+  searchOnEnter(e) {
+    let code = e.keyCode || e.which;
+    if (code === 13){
+      if (this.state.input === ''){
+        this.setState({error: true})
+        this.setState({search: false})
+      } else {
+        this.setState({search: true})
+        const search = this.state.input.split(" ").join('+');
+        fetch(`${URL_PATH}?q=${search}&maxResults=21`)
+          .then(response => response.json())
+          .then(json => {
+            let { items } = json;
+            this.setState({ items });
+            console.log(items);
+        })
+    }}
+  };
+
   render () {
     const isThereInput = this.state.error;
     const validSearch = this.state.search;
@@ -45,7 +65,7 @@ class BookSearch extends React.Component {
     if (isThereInput) {
       info = <SearchError onSearch={this.onSearch} />; 
     } else if (validSearch) {
-      info = <Books onSearch={this.onSearch} items={this.state.items} />;
+      info = <Books searchOnEnter={this.searchOnEnter} onSearch={this.onSearch} items={this.state.items} />;
     } else {
       info = <NoResults />;
     }
@@ -53,7 +73,8 @@ class BookSearch extends React.Component {
       <div id="wrapper">
         <h1>BOOK FINDER</h1>
         <Search 
-          input={this.state.input} 
+          input={this.state.input}
+          searchOnEnter={this.searchOnEnter} 
           onSearch={this.onSearch} 
           addText={this.addText}/>
         {info}
@@ -65,7 +86,7 @@ class BookSearch extends React.Component {
 function Search(props){
   return (
     <div id="search-wrapper">
-      <input type="text" id="search" placeholder="Search by book title or author" onChange={props.addText}/>
+      <input type="text" id="search" placeholder="Search by book title or author" onKeyPress={props.searchOnEnter} onChange={props.addText}/>
       <button id="search-button" type="submit" onClick={props.onSearch}>SEARCH</button>
     </div>
   )
