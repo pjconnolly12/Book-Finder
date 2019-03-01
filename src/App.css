@@ -102,6 +102,11 @@ h1 {
   padding-top: 20px;
   height: 75vh;
 }
+.unsuccessful {
+  height: 75vh;
+  font-size: 2em;
+  font-weight: 500;
+}
 #button {
   position: fixed;
   display: block;
