@@ -6,6 +6,7 @@
 }
 #wrapper {
   text-align: center;
+  -webkit-background-size: cover;
   background-image: url('books.jpg');
   background-position: center center;
   background-repeat: no-repeat;
