@@ -1,5 +1,5 @@
 ## Book Finder App
 
-### Project designed with React andthe Google Book API
+### Project designed with React and the Google Book API
 
-### This Project is an assignment for the Chingu Voyage
+This Project is an assignment for the Chingu Voyage
