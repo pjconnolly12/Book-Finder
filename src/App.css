@@ -4,13 +4,15 @@
 * {
   font-family: 'Raleway', sans-serif;
 }
-#wrapper {
-  text-align: center;
+body {
   -webkit-background-size: cover;
   background-image: url('books.jpg');
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+#wrapper {
+  text-align: center;
 }
 h1 {
   font-family: 'Luckiest Guy', cursive;
